@@ -103,6 +103,21 @@ namespace MakeSpriteFont
 
                 if (!optionalOptions.TryGetValue(name.ToLowerInvariant(), out field))
                 {
+					if (name.ToLowerInvariant() == "fromfile")
+					{
+						string line;
+						System.IO.StreamReader file = new System.IO.StreamReader(value);
+						while ((line = file.ReadLine()) != null)
+						{
+							if (!ParseArgument(line))
+							{
+                                return false;
+							}
+						}
+						file.Close();
+						return true;
+					}
+
                     ShowError("Unknown option '{0}'", name);
                     return false;
                 }
